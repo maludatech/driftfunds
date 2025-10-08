@@ -141,30 +141,6 @@ export default function Home() {
 
         {/* Footer */}
         <HomePageFooter />
-
-        {/* Smartsupp Live Chat Script */}
-        <Script id="smartsupp-chat" strategy="lazyOnload">
-          {`
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = 'e3474b14a38df0476501048cb0ad7914ec61c4bd';
-            window.smartsupp||(function(d) {
-              var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-              s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-              c.type='text/javascript';c.charset='utf-8';c.async=true;
-              c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-            })(document);
-          `}
-        </Script>
-        <noscript>
-          JavaScript is disabled. Live chat is unavailable. Please contact us at{" "}
-          <a
-            href={`mailto:support@${APP_NAME.toLowerCase()}.com`}
-            className="underline"
-          >
-            support@{APP_NAME.toLowerCase()}.com
-          </a>
-          .
-        </noscript>
       </div>
     </HomeLayout>
   );

@@ -19,15 +19,15 @@ const HomePageFooter = () => {
               {APP_NAME}
             </h1>
             <address className="not-italic text-[16px] text-muted-foreground">
-              {APP_NAME} Plc, 123 Financial Street, London, UK
+              {APP_NAME} Plc, 456 Blockchain Avenue, New York, USA
             </address>
             <div className="flex flex-col mt-2">
               <p className="text-[16px] text-muted-foreground">
                 <a
-                  href="tel:+44 7923 456 789"
+                  href="tel:+12125550198"
                   className="hover:underline hover:text-primary transition-colors duration-300"
                 >
-                  +44 7923 456 789
+                  +1 212 555 0198
                 </a>
               </p>
               <p className="text-[16px] text-muted-foreground">

@@ -30,7 +30,7 @@ const Contact = ({ id }: { id: string }) => {
                     Our Address
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {APP_NAME} Plc, 123 Financial Street, London, UK
+                    {APP_NAME} Plc, 456 Blockchain Avenue, New York, USA
                   </p>
                 </div>
               </div>
@@ -56,7 +56,7 @@ const Contact = ({ id }: { id: string }) => {
                       Call Us
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                    +44 7923 456 789
+                      +1 212 555 0198
                     </p>
                   </div>
                 </div>

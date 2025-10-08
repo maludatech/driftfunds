@@ -170,12 +170,12 @@ const Support = ({ callbackUrl = "/sign-in" }: { callbackUrl?: string }) => {
                 <ContactInfo
                   icon={<MapPin className="h-6 w-6 text-primary" />}
                   title="Address"
-                  details={`${APP_NAME} Plc, 123 Financial Street, London, UK`}
+                  details={`${APP_NAME} Plc, 456 Blockchain Avenue, New York, USA`}
                 />
                 <ContactInfo
                   icon={<Phone className="h-6 w-6 text-primary" />}
                   title="Phone"
-                  details="+44 7923 456 789"
+                  details="+1 212 555 0198"
                 />
                 <ContactInfo
                   icon={<Send className="h-6 w-6 text-primary" />}
