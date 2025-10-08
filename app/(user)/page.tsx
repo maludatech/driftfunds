@@ -88,7 +88,7 @@ export default function Home() {
             playsInline
             src={"/assets/videos/hero-video.mp4"}
             className="absolute inset-0 h-full w-full object-cover z-0"
-            poster="/hero-fallback-image.png" // Fallback image for browsers/devices that don't support video
+            poster="/assets/images/hero-fallback-image.png"
           >
             <source src="/hero-video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
