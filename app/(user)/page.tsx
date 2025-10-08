@@ -79,7 +79,7 @@ export default function Home() {
     <HomeLayout>
       <div>
         {/* Hero Section */}
-        <section className="relative flex min-h-screen w-full items-center justify-start overflow-hidden">
+        <section className="relative flex min-h-screen w-full items-center justify-start overflow-hidden pt-20">
           {/* Video Background with Image Fallback */}
           <video
             autoPlay

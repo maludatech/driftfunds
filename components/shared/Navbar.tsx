@@ -60,7 +60,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 z-20 h-16 p-3 w-full bg-card/80 backdrop-blur-sm shadow-md dark:shadow-gray-800"
+      className="fixed top-0 z-20 h-16 p-3 w-full bg-transparent backdrop-blur-xl shadow-md dark:shadow-gray-800"
       role="navigation"
       aria-label="Main navigation"
     >

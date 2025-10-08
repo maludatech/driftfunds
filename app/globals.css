@@ -5,13 +5,6 @@
 /* Root variables */
 :root {
   --color-primary: #14b8a6;
-  --font-satoshi: "Satoshi", sans-serif;
-  --font-inter: "Inter", sans-serif;
-  --font-poppins: "Poppins", sans-serif;
-  --font-orbitron: "Orbitron", sans-serif;
-  --font-error: "Error", sans-serif;
-  --font-sans-fallback: "Arial", "sans-serif";
-  --font-mono-fallback: "ui-monospace", "monospace";
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -80,94 +73,6 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Smooth transitions for color changes */
-html {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-/* Define gradient animation */
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Base styles */
-@layer base {
-  body {
-    @apply h-[100vh] bg-[var(--background)] text-[var(--foreground)];
-  }
-}
-
-/* Utilities */
-@layer utilities {
-  .body-container {
-    @apply max-w-screen-xl mx-auto;
-  }
-  .text-primary {
-    color: var(--color-primary);
-  }
-
-  .bg-primary {
-    background-color: var(--color-primary);
-  }
-
-  .border-primary {
-    border-color: var(--color-primary);
-  }
-
-  .hover\:bg-primary:hover {
-    background-color: var(--color-primary);
-  }
-
-  .hover\:text-primary:hover {
-    color: var(--color-primary);
-  }
-  .font-satoshi {
-    @apply font-[var(--font-satoshi)];
-  }
-  .font-inter {
-    @apply font-[var(--font-inter)];
-  }
-  .font-poppins {
-    @apply font-[var(--font-poppins)];
-  }
-  .font-orbitron {
-    @apply font-[var(--font-orbitron)];
-  }
-  .font-error {
-    @apply font-[var(--font-error)];
-  }
-  .black_gradient {
-    @apply bg-gradient-to-r from-slate-950 to-slate-400 text-transparent bg-clip-text;
-    background-size: 200% 100%;
-    animation: gradient 10s ease infinite;
-  }
-  .white_gradient {
-    @apply bg-gradient-to-r from-slate-200 to-slate-600 text-transparent bg-clip-text;
-    background-size: 200% 100%;
-    animation: gradient 10s ease infinite;
-  }
-  .dropdown {
-    @apply fixed top-0 left-0 py-4 pb-12 mt-16 w-full p-3 flex flex-col gap-6 font-normal bg-[var(--background)] text-[var(--foreground)] h-screen overflow-y-auto z-50 uppercase;
-    transition:
-      background-color 0.3s ease,
-      color 0.3s ease;
-  }
-  .animate-gradient {
-    background-size: 200% 100%;
-    animation: gradient 10s ease infinite;
-  }
-}
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -206,11 +111,84 @@ html {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Base styles */
 @layer base {
+  html {
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply h-[100vh] bg-background text-foreground;
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .body-container {
+    @apply max-w-screen-xl mx-auto;
+  }
+  .text-primary {
+    color: var(--color-primary);
+  }
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+  .hover\:bg-primary:hover {
+    background-color: var(--color-primary);
+  }
+  .hover\:text-primary:hover {
+    color: var(--color-primary);
+  }
+  .black_gradient {
+    @apply bg-gradient-to-r from-slate-950 to-slate-400 text-transparent bg-clip-text;
+    background-size: 200% 100%;
+    animation: gradient 10s ease infinite;
+  }
+  .white_gradient {
+    @apply bg-gradient-to-r from-slate-200 to-slate-600 text-transparent bg-clip-text;
+    background-size: 200% 100%;
+    animation: gradient 10s ease infinite;
+  }
+  .dropdown {
+    @apply fixed top-0 left-0 py-4 pb-12 mt-16 w-full p-3 flex flex-col gap-6 font-normal bg-[var(--background)] text-[var(--foreground)] h-screen overflow-y-auto z-50 uppercase;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+  .animate-gradient {
+    background-size: 200% 100%;
+    animation: gradient 10s ease infinite;
+  }
+  .animate-slide {
+    display: flex;
+    animation: slide 20s linear infinite;
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  /* Define gradient animation */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 }

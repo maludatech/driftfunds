@@ -1,17 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Users, GitBranch, Clock, Award, CheckCheck } from "lucide-react";
+import { Users, GitBranch, Clock, Award, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
-import { Separator } from "@/components/ui/separator";
 import { APP_NAME } from "@/lib/constants";
+import { motion } from "framer-motion";
 
-const About = ({ id }: { id: string }) => {
+// Define props interface for TypeScript
+interface AboutProps {
+  id: string;
+}
+
+const About: React.FC<AboutProps> = ({ id }) => {
   const [investors, setInvestors] = useState(0);
   const [branches, setBranches] = useState(0);
   const [awards, setAwards] = useState(0);
 
-  const ImageUrls = [
+  const clientLogos = [
     "/assets/images/home/clients/client-1.webp",
     "/assets/images/home/clients/client-2.webp",
     "/assets/images/home/clients/client-3.webp",
@@ -20,236 +25,231 @@ const About = ({ id }: { id: string }) => {
     "/assets/images/home/clients/client-6.webp",
   ];
 
-  // Investor Section - Countdown from 0 to the updated number of investors
+  // Stats Animation
   useEffect(() => {
-    let targetValue = 1200;
-    let increment = targetValue / (500 / 10);
+    const animateCounter = (
+      setCounter: (value: number) => void,
+      target: number,
+      duration: number
+    ) => {
+      const increment = target / (duration / 10);
+      let current = 0;
 
-    const updateCountdown = () => {
-      if (investors > 987) {
-        targetValue = investors;
-        increment = targetValue / (500 / 10);
-      }
-      if (investors < targetValue) {
-        setInvestors((prevCount) =>
-          Math.floor(Math.min(prevCount + increment, targetValue))
-        );
-      }
+      const interval = setInterval(() => {
+        if (current < target) {
+          current = Math.min(current + increment, target);
+          setCounter(Math.floor(current));
+        } else {
+          clearInterval(interval);
+        }
+      }, 10);
+
+      return () => clearInterval(interval);
     };
 
-    const interval = setInterval(updateCountdown, 10);
-    return () => clearInterval(interval);
-  }, [investors]);
+    animateCounter(setInvestors, 1200, 1500);
+    animateCounter(setBranches, 12, 1000);
+    animateCounter(setAwards, 13, 1000);
+  }, []);
 
-  // Branches Section
-  useEffect(() => {
-    const duration = 100;
-    const increment = 12 / (duration / 10);
-
-    const interval = setInterval(() => {
-      if (branches < 12) {
-        setBranches((prevCount) =>
-          Math.floor(Math.min(prevCount + increment, 12))
-        );
-      } else {
-        clearInterval(interval);
-      }
-    }, 10);
-
-    return () => clearInterval(interval);
-  }, [branches]);
-
-  // Awards Section
-  useEffect(() => {
-    const duration = 100;
-    const increment = 13 / (duration / 10);
-
-    const interval = setInterval(() => {
-      if (awards < 13) {
-        setAwards((prevCount) =>
-          Math.floor(Math.min(prevCount + increment, 13))
-        );
-      } else {
-        clearInterval(interval);
-      }
-    }, 10);
-
-    return () => clearInterval(interval);
-  }, [awards]);
+  // Animation Variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
 
   return (
-    <section
-      id={id}
-      className="flex min-h-screen flex-col gap-8 bg-background py-8 text-foreground"
-    >
-      <div className="mx-auto w-full max-w-7xl px-4">
-        <div className="rounded-lg bg-card/80 p-6 shadow-lg backdrop-blur-sm dark:shadow-gray-800">
-          <div className="grid grid-cols-2 gap-5 sm:flex sm:justify-between font-semibold text-primary">
-            {/* Investors */}
-            <div className="flex items-center gap-3">
-              <Users className="h-8 w-8 text-primary" />
-              <div className="flex flex-col">
-                <h1 className="text-lg">{investors}+</h1>
-                <p className="text-sm sm:text-base">Investors</p>
-              </div>
-            </div>
+    <section id={id} className="relative bg-background py-16 text-foreground">
+      <div className="container mx-auto">
+        {/* Hero-like Introduction */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeIn}
+          viewport={{ once: true }}
+          className="text-center mb-12 px-6"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Empowering Wealth Creation with{" "}
+            <span className="text-[var(--color-primary)]">{APP_NAME}</span>
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            {APP_NAME} is your gateway to a global community of investors,
+            offering innovative tools and a collaborative platform to grow your
+            wealth with confidence.
+          </p>
+        </motion.div>
 
-            {/* Branches */}
-            <div className="flex items-center gap-3">
-              <GitBranch className="h-8 w-8 text-primary" />
-              <div className="flex flex-col">
-                <h1 className="text-lg">{branches}</h1>
-                <p className="text-sm sm:text-base">Branches</p>
-              </div>
-            </div>
-
-            {/* Experience */}
-            <div className="flex items-center gap-3">
-              <Clock className="h-8 w-8 text-primary" />
-              <div className="flex flex-col">
-                <h1 className="text-lg">Decades</h1>
-                <p className="text-sm sm:text-base">of Experience</p>
-              </div>
-            </div>
-
-            {/* Awards */}
-            <div className="flex items-center gap-3">
-              <Award className="h-8 w-8 text-primary" />
-              <div className="flex flex-col">
-                <h1 className="text-lg">{awards}</h1>
-                <p className="text-sm sm:text-base">Awards</p>
-              </div>
-            </div>
-          </div>
-
-          <Separator className="my-6 bg-gray-200 dark:bg-gray-700" />
-
-          <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
-            <div className="w-full">
-              <Image
-                src="/assets/images/home/about-image.jpg"
-                alt="about image"
-                height={500}
-                width={500}
-                className="rounded-lg object-contain w-full"
-              />
-            </div>
-            <div className="flex w-full flex-col gap-4">
-              <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
-                Versatile Asset Hub
-              </h1>
-              <p className="italic text-muted-foreground">
-                {APP_NAME} introduces an innovative investment platform, uniting
-                diverse assets within a framework of social collaboration and
-                investor enlightenment. Our community serves as a nexus for
-                users to connect, exchange insights, and enrich their knowledge.
-              </p>
-              <ul className="flex flex-col gap-2">
-                <li className="flex items-center gap-2">
-                  <CheckCheck className="h-5 w-5 text-primary" />
-                  <span className="text-foreground">Consistent Expansion</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCheck className="h-5 w-5 text-primary" />
-                  <span className="text-foreground">
-                    Dependable Infrastructure
-                  </span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCheck className="h-5 w-5 text-primary" />
-                  <span className="text-foreground">Optimal Efficiency</span>
-                </li>
-              </ul>
-              <p className="italic text-muted-foreground">
-                {APP_NAME} offers access to over 2000 financial assets,
-                including stocks, cryptocurrencies, ETFs, and more. Investors
-                can trade with or without leverage across short, mid, and
-                long-term opportunities. Visit our Trade Services page for
-                details. Join a thriving community where users connect, share
-                knowledge, and learn together.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          <div className="rounded-lg bg-card/80 shadow-lg">
-            <Image
-              src="/assets/images/home/about/about-boxes-1.webp"
-              alt="mission image"
-              height={400}
-              width={400}
-              className="rounded-t-lg w-full object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-center text-xl font-semibold text-foreground">
-                Our Mission
-              </h2>
-              <p className="mt-2 text-center text-sm text-muted-foreground">
-                Our commitment is to deliver unparalleled service to each of our
-                customers and clients, ensuring that every facet of your
-                investment portfolio is meticulously crafted using the latest
-                market capitalization data. We are dedicated to providing you
-                with top-notch service at all times.
-              </p>
-            </div>
-          </div>
-          <div className="rounded-lg bg-card/80 shadow-lg">
-            <Image
-              src="/assets/images/home/about/about-boxes-2.webp"
-              alt="guarantees image"
-              height={400}
-              width={400}
-              className="rounded-t-lg w-full object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-center text-xl font-semibold text-foreground">
-                Our Guarantees
-              </h2>
-              <p className="mt-2 text-center text-sm text-muted-foreground">
-                {APP_NAME} operates under stringent regulation by both the FCA
-                and CySec. Furthermore, your invested funds are safeguarded by
-                our comprehensive insurance policy, ensuring the safety of your
-                capital without any concerns of loss.
-              </p>
-            </div>
-          </div>
-          <div className="rounded-lg bg-card/80 shadow-lg">
-            <Image
-              src="/assets/images/home/about/about-boxes-3.webp"
-              alt="vision image"
-              height={400}
-              width={400}
-              className="rounded-t-lg w-full object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-center text-xl font-semibold text-foreground">
-                Our Vision
-              </h2>
-              <p className="mt-2 text-center text-sm text-muted-foreground">
-                Empowering a Worldwide Community of Investors. {APP_NAME} stands
-                as a pioneering global social investment network, dedicated to
-                reshaping the landscape of investing and enriching the financial
-                knowledge of investors.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-8 border-y bg-card/80 py-4">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4">
-          {ImageUrls.map((imageUrl, index) => (
-            <Image
+        {/* Circular Stats Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 px-6">
+          {[
+            { value: investors, label: "Investors", icon: Users, suffix: "+" },
+            { value: branches, label: "Branches", icon: GitBranch },
+            { value: awards, label: "Awards", icon: Award },
+          ].map((stat, index) => (
+            <motion.div
               key={index}
-              src={imageUrl}
-              alt={`client-${index + 1}`}
-              height={100}
-              width={100}
-              className="grayscale hover:grayscale-0 transition-all"
-            />
+              initial="hidden"
+              whileInView="visible"
+              variants={fadeIn}
+              viewport={{ once: true }}
+              className="flex flex-col items-center"
+            >
+              <div className="relative w-32 h-32 mb-4">
+                <svg className="w-full h-full" viewBox="0 0 100 100">
+                  <circle
+                    className="text-gray-200"
+                    strokeWidth="8"
+                    stroke="currentColor"
+                    fill="transparent"
+                    r="44"
+                    cx="50"
+                    cy="50"
+                  />
+                  <circle
+                    className="text-[var(--color-primary)]"
+                    strokeWidth="8"
+                    strokeDasharray={`${(stat.value / (stat.label === "Investors" ? 1200 : 15)) * 276.5} 276.5`}
+                    strokeDashoffset="0"
+                    stroke="currentColor"
+                    fill="transparent"
+                    r="44"
+                    cx="50"
+                    cy="50"
+                    transform="rotate(-90 50 50)"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <stat.icon className="h-8 w-8 text-[var(--color-primary)]" />
+                </div>
+              </div>
+              <h3 className="text-2xl font-semibold text-foreground">
+                {stat.value}
+                {stat.suffix || ""}
+              </h3>
+              <p className="text-muted-foreground">{stat.label}</p>
+            </motion.div>
           ))}
         </div>
+
+        {/* Timeline for Milestones */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeIn}
+          viewport={{ once: true }}
+          className="px-6 mb-16"
+        >
+          <h2 className="text-3xl font-bold text-center text-foreground mb-8">
+            Our Journey
+          </h2>
+          <div className="relative">
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[var(--color-primary)]"></div>
+            <div className="space-y-8">
+              {[
+                {
+                  year: "2015",
+                  title: "Founded " + APP_NAME,
+                  desc: "Launched as a pioneering platform for crypto and asset trading.",
+                },
+                {
+                  year: "2018",
+                  title: "Global Expansion",
+                  desc: "Opened 12 branches worldwide to serve a growing community.",
+                },
+                {
+                  year: "2023",
+                  title: "Award-Winning Platform",
+                  desc: "Received 13 industry awards for innovation and reliability.",
+                },
+              ].map((milestone, index) => (
+                <div
+                  key={index}
+                  className={`flex items-center ${index % 2 === 0 ? "justify-start" : "justify-end"}`}
+                >
+                  <div
+                    className={`w-1/2 ${index % 2 === 0 ? "pr-8 text-right" : "pl-8 text-left"}`}
+                  >
+                    <h3 className="text-xl font-semibold text-foreground">
+                      {milestone.year}
+                    </h3>
+                    <h4 className="text-lg font-medium text-[var(--color-primary)]">
+                      {milestone.title}
+                    </h4>
+                    <p className="text-muted-foreground">{milestone.desc}</p>
+                  </div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-[var(--color-primary)] rounded-full"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Core Values with Checkmarks */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeIn}
+          viewport={{ once: true }}
+          className="px-6 mb-16"
+        >
+          <h2 className="text-3xl font-bold text-center text-foreground mb-8">
+            Why Choose {APP_NAME}?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Community-Driven",
+                desc: "Join a global network of investors sharing insights.",
+              },
+              {
+                title: "Regulated & Secure",
+                desc: "FCA and CySec regulated with insured funds.",
+              },
+              {
+                title: "Diverse Assets",
+                desc: "Access over 2000 assets, from crypto to ETFs.",
+              },
+            ].map((value, index) => (
+              <div key={index} className="flex items-start gap-3">
+                <CheckCircle2 className="h-6 w-6 text-[var(--color-primary)] flex-shrink-0" />
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {value.title}
+                  </h3>
+                  <p className="text-muted-foreground">{value.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Client Logo Carousel */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeIn}
+          viewport={{ once: true }}
+          className="overflow-hidden"
+        >
+          <h2 className="text-3xl font-bold text-center text-foreground mb-8">
+            Trusted by Industry Leaders
+          </h2>
+          <div className="relative mt-8 border-y bg-card/80 py-2">
+            <div className="flex animate-slide">
+              {[...clientLogos, ...clientLogos].map((logo, index) => (
+                <Image
+                  key={index}
+                  src={logo}
+                  alt={`client-${(index % clientLogos.length) + 1}`}
+                  height={80}
+                  width={80}
+                  className="mx-8 grayscale hover:grayscale-0 transition-all"
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
