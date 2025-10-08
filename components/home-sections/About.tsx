@@ -127,7 +127,7 @@ const About = ({ id }: { id: string }) => {
           <div className="flex flex-col gap-6 sm:flex-row sm:gap-8">
             <div className="w-full">
               <Image
-                src="/assets/images/home/About_image.webp"
+                src="/assets/images/home/about-image.jpg"
                 alt="about image"
                 height={500}
                 width={500}
