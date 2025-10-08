@@ -52,7 +52,7 @@ const sections = [
 // Reusable HomeLayout component
 const HomeLayout = ({ children }: { children: React.ReactNode }) => (
   <main
-    className="flex flex-col bg-background text-foreground"
+    className="flex flex-col bg-background text-foreground z-0"
     role="main"
     aria-labelledby="hero-heading"
   >
@@ -106,7 +106,7 @@ export default function Home() {
 
             {/* Main Heading */}
             <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
-              Take Control with <span className="text-accent">{APP_NAME}</span>
+              Take Control with <span className="">{APP_NAME}</span>
             </h1>
 
             {/* Subheading */}
@@ -119,13 +119,13 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href={user ? "/dashboard" : "/sign-up"}
-                className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white hover:bg-accent/90 transition-transform transform hover:scale-105"
+                className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-base font-semibold text-white hover:bg-primary/80 transition-transform transform hover:scale-105 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black"
               >
                 Start Investing Now
               </Link>
               <Link
                 href="#about"
-                className="inline-flex items-center justify-center rounded-lg border-2 border-white px-6 py-3 text-base font-semibold text-white hover:bg-white hover:text-black transition-transform transform hover:scale-105"
+                className="inline-flex items-center justify-center rounded-lg border-2 border-white px-6 py-3 text-base font-semibold text-white hover:bg-white/10 hover:border-white/80 transition-transform transform hover:scale-105 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
               >
                 Explore Features
               </Link>
