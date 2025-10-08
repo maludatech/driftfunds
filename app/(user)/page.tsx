@@ -52,7 +52,7 @@ const sections = [
 // Reusable HomeLayout component
 const HomeLayout = ({ children }: { children: React.ReactNode }) => (
   <main
-    className="flex flex-col bg-background text-foreground z-0"
+    className="flex flex-col bg-background text-foreground"
     role="main"
     aria-labelledby="hero-heading"
   >
@@ -98,7 +98,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/50 z-10"></div>
 
           {/* Content */}
-          <div className="relative z-20 mx-auto max-w-7xl px-6 py-16 w-full md:w-1/2">
+          <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 w-full md:w-1/2">
             {/* Badge */}
             <span className="inline-block rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white mb-6 shadow-md">
               Empower Your Financial Future

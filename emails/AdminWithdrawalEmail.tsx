@@ -21,12 +21,7 @@ interface AdminWithdrawalEmailProps {
   selectedCoin: string;
   walletAddress: string;
 }
-
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "";
+`  `;
 
 export const AdminWithdrawalEmail = ({
   username,
@@ -123,7 +118,7 @@ export const AdminWithdrawalEmail = ({
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
               © {year} {APP_NAME} Plc, All Rights Reserved
               <br />
-              123 Financial Street, London, UK
+              456 Blockchain Avenue, New York, USA
             </Text>
           </Row>
         </Section>
@@ -163,7 +158,7 @@ const content = {
 
 const header = {
   padding: "30px",
-  background: "linear-gradient(90deg, #B197FC 0%, #8968ee 100%)",
+  background: "linear-gradient(90deg, #14B8A6 0%, #0F172A 100%)",
 };
 
 const logoImg = {
@@ -180,10 +175,10 @@ const sectionBorder = {
 };
 
 const sectionCenter = {
-  borderBottom: "1px solid #8968ee",
+  borderBottom: "1px solid #14b8a6",
 };
 
 const link = {
   textDecoration: "underline",
-  color: "#8968ee",
+  color: "#14b8a6",
 };

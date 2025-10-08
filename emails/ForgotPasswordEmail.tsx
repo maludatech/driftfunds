@@ -95,7 +95,7 @@ export const PasswordForgotEmail = ({
           <Row>
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
               © {year} {APP_NAME} Plc, All Rights Reserved <br />
-              123 Financial Street, London, UK
+              456 Blockchain Avenue, New York, USA
             </Text>
           </Row>
         </Section>
@@ -153,13 +153,13 @@ const sectionBorder = {
 };
 
 const sectionCenter = {
-  borderBottom: "1px solid #8968ee",
+  borderBottom: "1px solid #14b8a6",
   width: "102px",
 };
 
 const link = {
   textDecoration: "underline",
-  color: "#8968ee",
+  color: "#14b8a6",
 };
 
 const codeBlock = {

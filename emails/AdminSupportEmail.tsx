@@ -22,10 +22,6 @@ interface AdminSupportEmailProps {
   message: string;
 }
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "";
-
 export const AdminSupportEmail = ({
   username,
   fullName,
@@ -153,7 +149,7 @@ const content = {
 
 const header = {
   padding: "30px",
-  background: "linear-gradient(90deg, #14B8A6 0%, #06B6D4 100%)",
+  background: "linear-gradient(90deg, #14B8A6 0%, #0F172A 100%)",
 };
 
 const logoImg = {

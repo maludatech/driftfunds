@@ -49,9 +49,10 @@ export const WelcomeEmail = ({ username = "User" }: WelcomeEmailProps) => {
           <Section style={content}>
             <Text style={paragraph}>Hi {username},</Text>
             <Text style={paragraph}>
-              Welcome to {APP_NAME}, your platform for online trading and
-              financial growth. Your account is ready, and you can now access
-              our tools and services to achieve your financial goals.
+              Welcome to {APP_NAME}! You’ve just joined a community of investors
+              taking charge of their financial future. Your account is live,
+              it’s time to explore the tools that can turn your goals into
+              results.
             </Text>
             <Section style={btnContainer}>
               <Button style={button} href={`${APP_DOMAIN}/sign-in`}>
@@ -94,7 +95,7 @@ export const WelcomeEmail = ({ username = "User" }: WelcomeEmailProps) => {
           <Row>
             <Text style={{ textAlign: "center", color: "#706a7b" }}>
               © {year} {APP_NAME} Plc, All Rights Reserved <br />
-              123 Financial Street, London, UK <br />
+              456 Blockchain Avenue, New York, USA <br />
             </Text>
           </Row>
         </Section>
@@ -158,13 +159,13 @@ const sectionBorder = {
 };
 
 const sectionCenter = {
-  borderBottom: "1px solid #8968ee",
+  borderBottom: "1px solid #14b8a6",
   width: "102px",
 };
 
 const link = {
   textDecoration: "underline",
-  color: "#8968ee",
+  color: "#14b8a6",
 };
 
 const btnContainer = {
@@ -172,7 +173,7 @@ const btnContainer = {
 };
 
 const button = {
-  backgroundColor: "#8968ee",
+  backgroundColor: "#14b8a6",
   borderRadius: "3px",
   color: "#fff",
   fontSize: "16px",

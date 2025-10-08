@@ -157,7 +157,7 @@ const content = {
 
 const header = {
   padding: "30px",
-  background: "linear-gradient(90deg, #14B8A6 0%, #06B6D4 100%)",
+  background: "linear-gradient(90deg, #14B8A6 0%, #0F172A 100%)",
 };
 
 const logoImg = {
