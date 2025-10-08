@@ -143,7 +143,7 @@ const Navbar = () => {
                       className="rounded-lg bg-primary p-3 text-sm font-semibold text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 transition uppercase hover:cursor-pointer"
                       disabled={isLoggingOut}
                       onClick={() => {
-                        handleLogout(), setToggleDropDown(!toggleDropDown);
+                        (handleLogout(), setToggleDropDown(!toggleDropDown));
                       }}
                     >
                       Sign out
