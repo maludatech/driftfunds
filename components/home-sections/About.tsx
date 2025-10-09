@@ -191,7 +191,7 @@ const About: React.FC<AboutProps> = ({ id }) => {
           whileInView="visible"
           variants={fadeIn}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-16 mt-8"
         >
           <h2 className="text-3xl font-bold text-center text-foreground mb-8">
             Why Choose {APP_NAME}?
