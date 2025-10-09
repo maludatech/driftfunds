@@ -20,8 +20,8 @@ interface Testimonial {
 
 const testimonialsData: Testimonial[] = [
   {
-    image: "/assets/images/home/testimonials/testimonials-1.webp",
-    name: "Alejandro Luis",
+    image: "/assets/images/home/testimonials/testimonials-1.jpg",
+    name: "Josue Arellano",
     location: "Mexico City, Mexico",
     flag: "/assets/images/home/country-flags/mexico.png",
     flagAlt: "flag_mexico",
@@ -29,8 +29,8 @@ const testimonialsData: Testimonial[] = [
       "I was hesitant about crypto, but {APP_NAME}’s expertise and clear guidance helped me build a diversified portfolio that fits my risk tolerance. My investments are in great hands!",
   },
   {
-    image: "/assets/images/home/testimonials/testimonials-2.webp",
-    name: "Sandy Wood",
+    image: "/assets/images/home/testimonials/testimonials-2.jpg",
+    name: "Ashley Wood",
     location: "Miami, Florida, USA",
     flag: "/assets/images/home/country-flags/USA.png",
     flagAlt: "flag_usa",
@@ -38,8 +38,8 @@ const testimonialsData: Testimonial[] = [
       "Working with {APP_NAME} has been a game-changer. Their market insights and support have helped me achieve my financial goals, and I keep recommending them to everyone!",
   },
   {
-    image: "/assets/images/home/testimonials/testimonials-3.webp",
-    name: "Mohammed Rezarajabi",
+    image: "/assets/images/home/testimonials/testimonials-3.jpg",
+    name: "Mohammed Faraydoon",
     location: "East Azarbaijan, Iran",
     flag: "/assets/images/home/country-flags/Iran.png",
     flagAlt: "flag_iran",
@@ -47,7 +47,7 @@ const testimonialsData: Testimonial[] = [
       "I made mistakes investing on my own, but {APP_NAME} guided me onto the right path with their expert advice and strategies.",
   },
   {
-    image: "/assets/images/home/testimonials/testimonials-4.webp",
+    image: "/assets/images/home/testimonials/testimonials-4.jpg",
     name: "Susan Moldovan",
     location: "Toronto, Canada",
     flag: "/assets/images/home/country-flags/Canada.png",
@@ -56,7 +56,7 @@ const testimonialsData: Testimonial[] = [
       "Great company with top-notch investment services. {APP_NAME} keeps delivering, and I’m thrilled with their work!",
   },
   {
-    image: "/assets/images/home/testimonials/testimonials-5.webp",
+    image: "/assets/images/home/testimonials/testimonials-5.jpg",
     name: "Jeff Watter",
     location: "California, USA",
     flag: "/assets/images/home/country-flags/USA.png",
