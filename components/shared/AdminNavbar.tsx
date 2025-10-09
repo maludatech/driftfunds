@@ -66,7 +66,7 @@ const AdminNavbar = () => {
               height={30}
               alt={`${APP_NAME} logo`}
             />
-            <h1 className="sm:flex bg-gradient-to-r from-slate-800 to-slate-400 dark:from-slate-200 dark:to-slate-600 text-transparent bg-clip-text animate-gradient font-bold text-lg sm:text-xl">
+            <h1 className="text-primary font-bold text-xl sm:text-2xl">
               {APP_NAME}
             </h1>
           </Link>
