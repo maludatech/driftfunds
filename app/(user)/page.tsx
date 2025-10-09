@@ -1,9 +1,7 @@
 "use client";
 
-import Script from "next/script";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { APP_NAME } from "@/lib/constants";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -61,7 +59,6 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function Home() {
-  const { theme } = useTheme();
   const { user } = useAuthStore();
   const [mounted, setMounted] = useState(false);
 

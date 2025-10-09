@@ -1,8 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { APP_NAME } from "@/lib/constants";
 
-const teamMembers = [
+// Define TeamMember type for TypeScript
+interface TeamMember {
+  imageUrl: string;
+  name: string;
+  position: string;
+}
+
+const teamMembers: TeamMember[] = [
   {
     imageUrl: "/assets/images/home/team/team1.webp",
     name: "Jason Campbell",
@@ -20,44 +29,75 @@ const teamMembers = [
   },
 ];
 
-const Teams = ({ id }: { id: string }) => {
-  return (
-    <div id={id} className="flex flex-col px-3 sm:px-8 body-container">
-      <div className="flex flex-col">
-        <h1 className="text-lg font-bold uppercase text-foreground sm:text-xl">
-          Team
-        </h1>
-        <h1 className="text-2xl sm:text-3xl text-primary">Check Our Team</h1>
-      </div>
+const Teams: React.FC<{ id: string }> = ({ id }) => {
+  // Animation Variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
 
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:justify-between sm:gap-6 mt-4">
-        {teamMembers.map((teamMember, index) => {
-          return (
-            <div className="relative mx-2 sm:mx-0" key={index}>
-              <div className="relative">
-                <Image
-                  src={teamMember.imageUrl}
-                  width={500}
-                  height={500}
-                  alt={`${teamMember.name} - ${teamMember.position}`}
-                  className="rounded-sm object-cover transform transition duration-300 ease-in-out hover:scale-105"
-                />
-                <div className="absolute inset-0 flex flex-col justify-end items-center">
-                  <div className="bg-white bg-opacity-50 p-2">
-                    <p className="text-black text-xl text-center font-semibold">
-                      {teamMember.name}
-                    </p>
-                    <p className="text-gray-600 text-center mt-1 italic">
-                      {teamMember.position}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+  const cardVariants = {
+    rest: { scale: 1, y: 0, opacity: 0.9 },
+    hover: {
+      scale: 1.05,
+      y: -10,
+      opacity: 1,
+      boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  return (
+    <section
+      id={id}
+      className="relative bg-gradient-to-b from-primary/10 to-background py-16 text-foreground"
+    >
+      {/* Animated Header */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        variants={headerVariants}
+        viewport={{ once: true }}
+        className="mx-auto max-w-7xl px-6 text-center mb-12"
+      >
+        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          Meet the <span className="text-primary">{APP_NAME} Team</span>
+        </h1>
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+          Our dedicated experts drive {APP_NAME}’s mission to empower your
+          financial success.
+        </p>
+      </motion.div>
+
+      {/* Team Members Grid */}
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {teamMembers.map((teamMember, index) => (
+            <motion.div
+              key={index}
+              initial="rest"
+              whileHover="hover"
+              variants={cardVariants}
+              className="relative flex flex-col items-center rounded-lg bg-card/80 p-6 shadow-lg backdrop-blur-sm border border-transparent hover:border-primary/50 transition-all"
+            >
+              <Image
+                src={teamMember.imageUrl}
+                width={300}
+                height={300}
+                alt={`${teamMember.name} - ${teamMember.position}`}
+                className="rounded-lg object-cover mb-4"
+              />
+              <h3 className="text-xl font-semibold text-foreground">
+                {teamMember.name}
+              </h3>
+              <p className="text-sm text-muted-foreground italic">
+                {teamMember.position}
+              </p>
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

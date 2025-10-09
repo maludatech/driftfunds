@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Users, GitBranch, Clock, Award, CheckCircle2 } from "lucide-react";
-import Image from "next/image";
+import { Users, GitBranch, Award, CheckCircle2 } from "lucide-react";
 import { APP_NAME } from "@/lib/constants";
 import { motion } from "framer-motion";
 
@@ -191,7 +190,7 @@ const About: React.FC<AboutProps> = ({ id }) => {
           whileInView="visible"
           variants={fadeIn}
           viewport={{ once: true }}
-          className="mb-16 mt-8"
+          className="mt-8"
         >
           <h2 className="text-3xl font-bold text-center text-foreground mb-8">
             Why Choose {APP_NAME}?
