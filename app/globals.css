@@ -170,6 +170,17 @@
     display: flex;
     animation: slide 20s linear infinite;
   }
+  .bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  }
+  .from-primary\/10 {
+    --tw-gradient-from: color-mix(
+      in oklch,
+      var(--color-primary),
+      transparent 90%
+    );
+    --tw-gradient-stops: var(--tw-gradient-from), transparent;
+  }
 
   @keyframes slide {
     0% {

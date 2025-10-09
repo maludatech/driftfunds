@@ -60,14 +60,14 @@ const About: React.FC<AboutProps> = ({ id }) => {
 
   return (
     <section id={id} className="relative bg-background py-16 text-foreground">
-      <div className="container mx-auto">
+      <div className="container mx-auto px-6 ">
         {/* Hero-like Introduction */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           variants={fadeIn}
           viewport={{ once: true }}
-          className="text-center mb-12 px-6"
+          className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Empowering Wealth Creation with{" "}
@@ -81,7 +81,7 @@ const About: React.FC<AboutProps> = ({ id }) => {
         </motion.div>
 
         {/* Circular Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {[
             { value: investors, label: "Investors", icon: Users, suffix: "+" },
             { value: branches, label: "Branches", icon: GitBranch },
@@ -138,7 +138,7 @@ const About: React.FC<AboutProps> = ({ id }) => {
           whileInView="visible"
           variants={fadeIn}
           viewport={{ once: true }}
-          className="px-6 mb-16"
+          className="b-16"
         >
           <h2 className="text-3xl font-bold text-center text-foreground mb-8">
             Our Journey
@@ -191,7 +191,7 @@ const About: React.FC<AboutProps> = ({ id }) => {
           whileInView="visible"
           variants={fadeIn}
           viewport={{ once: true }}
-          className="px-6 mb-16"
+          className="mb-16"
         >
           <h2 className="text-3xl font-bold text-center text-foreground mb-8">
             Why Choose {APP_NAME}?
@@ -221,33 +221,6 @@ const About: React.FC<AboutProps> = ({ id }) => {
                 </div>
               </div>
             ))}
-          </div>
-        </motion.div>
-
-        {/* Client Logo Carousel */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          variants={fadeIn}
-          viewport={{ once: true }}
-          className="overflow-hidden"
-        >
-          <h2 className="text-3xl font-bold text-center text-foreground mb-8">
-            Trusted by Industry Leaders
-          </h2>
-          <div className="relative mt-8 border-y bg-card/80 py-2">
-            <div className="flex animate-slide">
-              {[...clientLogos, ...clientLogos].map((logo, index) => (
-                <Image
-                  key={index}
-                  src={logo}
-                  alt={`client-${(index % clientLogos.length) + 1}`}
-                  height={80}
-                  width={80}
-                  className="mx-8 grayscale hover:grayscale-0 transition-all"
-                />
-              ))}
-            </div>
           </div>
         </motion.div>
       </div>

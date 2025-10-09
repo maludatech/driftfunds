@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Laptop,
   LineChart,
@@ -8,87 +9,125 @@ import {
   ListCheck,
   Clock,
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { APP_NAME } from "@/lib/constants";
 
-const servicesData = [
+// Define the Service type for TypeScript
+interface Service {
+  icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
+  title: string;
+  description: string;
+}
+
+const servicesData: Service[] = [
   {
     icon: Laptop,
     title: "Crypto Asset Management",
     description:
-      "This service provides comprehensive portfolio management for cryptocurrencies, including asset selection, risk management, and trading execution.",
+      "Expertly manage your cryptocurrency portfolio with tailored asset selection, risk management, and seamless trading execution for optimal returns.",
   },
   {
     icon: LineChart,
     title: "Crypto Trading",
     description:
-      "This service allows you to trade and invest in cryptocurrencies through the company's platform. The platform is designed to be user-friendly and easy to use, even for beginners.",
+      "Trade and invest in cryptocurrencies effortlessly on our intuitive platform, designed for beginners and seasoned investors alike.",
   },
   {
     icon: Book,
     title: "Crypto Education",
     description:
-      "The company offers a variety of courses, webinars, and articles that cover topics such as blockchain technology, cryptocurrency trading, and investment strategies.",
+      "Master blockchain and trading with our comprehensive courses, webinars, and articles crafted to elevate your investment knowledge.",
   },
   {
     icon: Briefcase,
     title: "Crypto Custody",
     description:
-      "This service provides secure storage for your cryptocurrencies. The company's custodians are experts in security and have a proven track record of protecting digital assets.",
+      "Store your cryptocurrencies securely with our expert custodians, leveraging top-tier security to protect your digital assets.",
   },
   {
     icon: ListCheck,
     title: "Crypto Consulting",
     description:
-      "The company's team of experts can help you with everything from choosing a cryptocurrency exchange to developing an investment strategy.",
+      "Get personalized guidance from our experts on choosing exchanges and crafting investment strategies tailored to your goals.",
   },
   {
     icon: Clock,
     title: "Crypto Research",
     description:
-      "The company's team of analysts tracks market trends and developments, and publishes reports that help you make informed investment decisions.",
+      "Stay ahead with our analysts’ market insights and detailed reports to make informed, data-driven investment decisions.",
   },
 ];
 
-const Services = ({ id }: { id: string }) => {
-  return (
-    <section
-      id={id}
-      className="flex flex-col gap-8 bg-background p-4 py-8 text-foreground"
-    >
-      <div className="mx-auto w-full max-w-7xl">
-        <div className="flex flex-col gap-4">
-          {/* Header Section */}
-          <div className="flex flex-col gap-2">
-            <h1 className="text-lg font-bold uppercase text-foreground sm:text-xl">
-              Services
-            </h1>
-            <h2 className="text-2xl font-bold text-primary sm:text-3xl">
-              Check our Services
-            </h2>
-          </div>
+const Services: React.FC<{ id: string }> = ({ id }) => {
+  const [activeTab, setActiveTab] = useState(0);
 
-          {/* Services List */}
-          <div className="grid gap-6 sm:grid-cols-2">
-            {servicesData.map((service, index) => (
-              <div
-                key={index}
-                className="flex rounded-lg bg-card/80 p-4 shadow-lg backdrop-blur-sm gap-4"
-              >
-                <service.icon
-                  className="h-10 w-10 text-primary"
-                  aria-hidden="true"
-                />
-                <div className="flex flex-col gap-2">
-                  <h1 className="font-semibold text-primary">
-                    {service.title}
-                  </h1>
-                  <p className="text-sm text-muted-foreground">
-                    {service.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+  // Animation Variants
+  const cardVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, x: 20, transition: { duration: 0.3 } },
+  };
+
+  // Get the icon component
+  const IconComponent = servicesData[activeTab].icon;
+
+  return (
+    <section id={id} className="relative bg-background py-16 text-foreground">
+      {/* Header with Gradient Background */}
+      <div className="bg-gradient-to-r from-primary/10 to-transparent py-12 mb-12">
+        <div className="mx-auto max-w-7xl px-6 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Discover Our <span className="text-primary">Services</span>
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Explore how {APP_NAME} empowers your crypto journey with
+            cutting-edge tools and expert support.
+          </p>
         </div>
+      </div>
+
+      {/* Tabbed Interface */}
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {servicesData.map((service, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveTab(index)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                activeTab === index
+                  ? "bg-primary text-white"
+                  : "bg-card/80 text-foreground hover:bg-primary/10"
+              }`}
+            >
+              {service.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Active Service Card */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="bg-card/80 rounded-lg p-6 shadow-lg backdrop-blur-sm max-w-3xl mx-auto flex items-start gap-6"
+          >
+            <IconComponent
+              className="h-12 w-12 text-primary flex-shrink-0"
+              aria-hidden={true} // Changed to boolean
+            />
+            <div>
+              <h2 className="text-2xl font-semibold text-foreground mb-2">
+                {servicesData[activeTab].title}
+              </h2>
+              <p className="text-muted-foreground">
+                {servicesData[activeTab].description}
+              </p>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
