@@ -8,7 +8,7 @@ import { APP_EMAIL, APP_NAME } from "@/lib/constants";
 
 export const POST = async (req: Request) => {
   const data = await req.json();
-  const { subject, heading, message } = data;
+  const { subject, heading, message, recipientEmail } = data;
 
   const renderEmailToString = async (
     EmailComponent: React.FC<any>,
@@ -20,8 +20,6 @@ export const POST = async (req: Request) => {
 
   try {
     await connectToDb();
-
-    const users = await User.find({}, "email username");
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -35,12 +33,23 @@ export const POST = async (req: Request) => {
 
     const htmlMessage = marked(message || "");
 
-    for (const user of users) {
+    if (recipientEmail && recipientEmail !== "all") {
+      // Send to individual user
+      const user = await User.findOne(
+        { email: recipientEmail },
+        "email username"
+      );
+      if (!user) {
+        return new Response(JSON.stringify({ message: "User not found" }), {
+          status: 404,
+        });
+      }
+
       const emailHtml = await renderEmailToString(UserBroadcastEmail, {
         username: user.username,
         subject,
         heading,
-        message: htmlMessage, // ✅ inject parsed HTML
+        message: htmlMessage,
       });
 
       const MailOptions = {
@@ -50,15 +59,41 @@ export const POST = async (req: Request) => {
         html: emailHtml,
       };
 
-      // Send the email
       await transporter.sendMail(MailOptions);
-    }
 
-    // Return success response
-    return new Response(
-      JSON.stringify({ message: "Emails sent successfully!" }),
-      { status: 200 }
-    );
+      return new Response(
+        JSON.stringify({
+          message: `Email sent successfully to ${user.email}!`,
+        }),
+        { status: 200 }
+      );
+    } else {
+      // Broadcast to all users
+      const users = await User.find({}, "email username");
+
+      for (const user of users) {
+        const emailHtml = await renderEmailToString(UserBroadcastEmail, {
+          username: user.username,
+          subject,
+          heading,
+          message: htmlMessage,
+        });
+
+        const MailOptions = {
+          from: `${APP_NAME} Plc <${APP_EMAIL}>`,
+          to: user.email,
+          subject,
+          html: emailHtml,
+        };
+
+        await transporter.sendMail(MailOptions);
+      }
+
+      return new Response(
+        JSON.stringify({ message: "Emails sent successfully to all users!" }),
+        { status: 200 }
+      );
+    }
   } catch (error: any) {
     log.error("Error sending email:", error);
     return new Response(JSON.stringify({ message: "Error sending emails!" }), {

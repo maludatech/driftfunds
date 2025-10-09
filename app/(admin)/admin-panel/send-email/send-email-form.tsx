@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 import { Spinner } from "@/components/shared/Spinner";
 import { useAdminStore } from "@/store/useAdminStore";
 import AdminSideNavbar from "@/components/shared/AdminSideNavbar";
@@ -18,6 +19,12 @@ interface FormValues {
   subject: string;
   heading: string;
   message: string;
+  recipientEmail: string;
+}
+
+interface User {
+  email: string;
+  username: string;
 }
 
 // Reusable FormField component
@@ -29,6 +36,7 @@ const FormField = ({
   error,
   placeholder,
   rows,
+  options,
 }: {
   id: string;
   label: string;
@@ -37,8 +45,14 @@ const FormField = ({
   error?: string;
   placeholder: string;
   rows?: number;
+  options?: { value: string; label: string }[];
 }) => (
-  <div className="flex flex-col gap-1">
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3 }}
+    className="flex flex-col gap-1"
+  >
     <label
       htmlFor={id}
       className="text-sm font-semibold capitalize text-foreground"
@@ -57,6 +71,21 @@ const FormField = ({
           rows={rows}
           aria-describedby={error ? `${id}-error` : undefined}
         />
+      ) : type === "select" ? (
+        <select
+          id={id}
+          className={`w-full p-3 rounded-lg border bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all ${
+            error ? "border-red-500" : "border-gray-300 dark:border-gray-600"
+          }`}
+          {...register}
+          aria-describedby={error ? `${id}-error` : undefined}
+        >
+          {options?.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       ) : (
         <input
           id={id}
@@ -75,7 +104,7 @@ const FormField = ({
         {error}
       </p>
     )}
-  </div>
+  </motion.div>
 );
 
 const SendEmailForm = ({
@@ -89,13 +118,36 @@ const SendEmailForm = ({
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [users, setUsers] = useState<User[]>([]);
 
-  // preview state
+  // Preview state
   const [previewData, setPreviewData] = useState<FormValues>({
     subject: "",
     heading: "",
     message: "",
+    recipientEmail: "all",
   });
+
+  // Fetch users for dropdown
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("/api/admin/users");
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          toast.error("Failed to fetch users");
+        }
+      } catch (error) {
+        log.error("Error fetching users:", error);
+        toast.error("Error fetching users");
+      }
+    };
+    if (admin) {
+      fetchUsers();
+    }
+  }, [admin]);
 
   // Authentication check
   useEffect(() => {
@@ -114,6 +166,7 @@ const SendEmailForm = ({
       .string()
       .min(50, "Message must be at least 50 characters")
       .required("Message is required and must be at least 50 characters"),
+    recipientEmail: yup.string().required("Recipient is required"),
   });
 
   const {
@@ -124,22 +177,25 @@ const SendEmailForm = ({
     watch,
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
+    defaultValues: { recipientEmail: "all" },
   });
 
   // Watch for live changes → update preview
   const watchedSubject = watch("subject");
   const watchedHeading = watch("heading");
   const watchedMessage = watch("message");
+  const watchedRecipientEmail = watch("recipientEmail");
 
   useEffect(() => {
     setPreviewData({
       subject: watchedSubject || "",
       heading: watchedHeading || "",
       message: watchedMessage || "",
+      recipientEmail: watchedRecipientEmail || "all",
     });
-  }, [watchedSubject, watchedHeading, watchedMessage]);
+  }, [watchedSubject, watchedHeading, watchedMessage, watchedRecipientEmail]);
 
-  // Update errorMessage whenever there is a validation error
+  // Update errorMessage for validation errors
   useEffect(() => {
     if (errors.subject) {
       setErrorMessage(errors.subject.message || "");
@@ -147,20 +203,22 @@ const SendEmailForm = ({
       setErrorMessage(errors.heading.message || "");
     } else if (errors.message) {
       setErrorMessage(errors.message.message || "");
+    } else if (errors.recipientEmail) {
+      setErrorMessage(errors.recipientEmail.message || "");
     } else {
-      setErrorMessage(""); // Clear error message if no errors
+      setErrorMessage("");
     }
   }, [errors]);
 
-  // Handle toast notifications reactively
+  // Handle toast notifications
   useEffect(() => {
     if (errorMessage) {
       toast.error(errorMessage);
-      setErrorMessage(""); // Clear after showing toast
+      setErrorMessage("");
     }
     if (successMessage) {
       toast.success(successMessage);
-      setSuccessMessage(""); // Clear after showing toast
+      setSuccessMessage("");
     }
   }, [errorMessage, successMessage]);
 
@@ -183,16 +241,13 @@ const SendEmailForm = ({
       if (response.ok) {
         const responseData = await response.json();
         setSuccessMessage(responseData.message);
-        setTimeout(() => setSuccessMessage(""), 3000);
         reset();
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);
-        setTimeout(() => setErrorMessage(""), 3000);
       }
     } catch (error) {
       setErrorMessage("An error occurred. Please try again later.");
-      setTimeout(() => setErrorMessage(""), 3000);
       log.error("Error while sending email:", error);
     } finally {
       setIsLoading(false);
@@ -200,20 +255,46 @@ const SendEmailForm = ({
   };
 
   return (
-    <div className="flex min-h-screen bg-background body-container p-4 pt-24 text-foreground w-full font-rubik">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex min-h-screen bg-gradient-to-b from-primary/10 to-background body-container p-4 pt-24 text-foreground w-full font-rubik"
+    >
       <AdminSideNavbar />
       <div className="lg:ml-[200px] 2xl:ml-[150px] flex flex-col md:flex-row justify-center items-start w-full gap-6">
-        {/* Left: form */}
-        <div className="flex flex-col w-full gap-1 rounded-lg bg-card/80 p-6 shadow-lg backdrop-blur-sm dark:shadow-gray-800">
+        {/* Left: Form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col w-full gap-1 rounded-lg bg-card/80 p-6 shadow-lg backdrop-blur-sm dark:shadow-gray-800"
+        >
           <h2 className="mb-4 text-2xl font-bold text-primary">Send Email</h2>
           <p className="mb-6 text-sm text-muted-foreground">
-            Enter the subject, heading, and message to send an email to users.
+            Send an email to all users or a specific user. Markdown is supported
+            for formatting.
           </p>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-4"
           >
+            <FormField
+              id="recipientEmail"
+              label="Recipient"
+              type="select"
+              register={register("recipientEmail")}
+              error={errors.recipientEmail?.message}
+              placeholder="Select a recipient"
+              options={[
+                { value: "all", label: "All Users" },
+                ...users.map((user) => ({
+                  value: user.email,
+                  label: `${user.username} (${user.email})`,
+                })),
+              ]}
+            />
             <FormField
               id="subject"
               label="Subject"
@@ -240,29 +321,42 @@ const SendEmailForm = ({
               rows={10}
             />
             <p className="text-xs text-muted-foreground">
-              Supports Markdown (e.g. **bold**, _italic_, # Heading,
+              Supports Markdown (e.g., **bold**, _italic_, # Heading,
               [link](https://example.com))
             </p>
 
-            <button
+            <motion.button
               type="submit"
               disabled={isLoading}
-              className="mt-4 w-full rounded-lg bg-primary px-4 py-2 font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-4 w-full rounded-lg bg-primary px-4 py-2 font-semibold text-white transition-transform hover:bg-primary/80 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isLoading ? (
                 <Spinner otherStyles="h-5 w-5 mx-auto" />
               ) : (
                 "Send Email"
               )}
-            </button>
+            </motion.button>
           </form>
-        </div>
+        </motion.div>
 
-        {/* Right: live preview */}
-        <div className="flex flex-col w-full md:w-xl rounded-lg bg-card/80 p-6 shadow-md overflow-auto">
+        {/* Right: Live Preview */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex flex-col w-full md:w-xl rounded-lg bg-card/80 p-6 shadow-md overflow-auto"
+        >
           <h3 className="text-lg font-semibold mb-2 text-primary">
             Live Preview
           </h3>
+          <p className="text-sm text-muted-foreground mb-2">
+            To:{" "}
+            {previewData.recipientEmail === "all"
+              ? "All Users"
+              : previewData.recipientEmail}
+          </p>
           <h4 className="text-xl font-bold mb-2">{previewData.heading}</h4>
           <div
             className="prose dark:prose-invert max-w-none"
@@ -270,9 +364,9 @@ const SendEmailForm = ({
               __html: marked(previewData.message || ""),
             }}
           />
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
