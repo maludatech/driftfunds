@@ -25,8 +25,7 @@ const testimonialsData: Testimonial[] = [
     location: "Mexico City, Mexico",
     flag: "/assets/images/home/country-flags/mexico.png",
     flagAlt: "flag_mexico",
-    quote:
-      "I was hesitant about crypto, but {APP_NAME}’s expertise and clear guidance helped me build a diversified portfolio that fits my risk tolerance. My investments are in great hands!",
+    quote: `When I first dipped my toes into crypto, I was overwhelmed and skeptical, unsure if I could navigate the volatile market. ${APP_NAME} changed everything for me. Their team took the time to understand my financial goals and risk tolerance, crafting a diversified portfolio that feels secure and tailored to my needs. Their clear, step-by-step guidance and ongoing support have given me confidence, and I’ve seen consistent growth in my investments. I couldn’t ask for a better partner on this journey!`,
   },
   {
     image: "/assets/images/home/testimonials/testimonials-2.jpg",
@@ -34,8 +33,7 @@ const testimonialsData: Testimonial[] = [
     location: "Miami, Florida, USA",
     flag: "/assets/images/home/country-flags/USA.png",
     flagAlt: "flag_usa",
-    quote:
-      "Working with {APP_NAME} has been a game-changer. Their market insights and support have helped me achieve my financial goals, and I keep recommending them to everyone!",
+    quote: `Partnering with ${APP_NAME} has been a total game-changer for my financial future. Their deep market insights and personalized strategies helped me not only achieve but surpass my investment goals. What stands out most is their incredible support—they’re always there to answer questions and provide updates, making me feel like a valued client. I’ve recommended ${APP_NAME} to my friends and family because their expertise and dedication are unmatched. I’m excited to see where this partnership takes me next!`,
   },
   {
     image: "/assets/images/home/testimonials/testimonials-3.jpg",
@@ -43,8 +41,7 @@ const testimonialsData: Testimonial[] = [
     location: "East Azarbaijan, Iran",
     flag: "/assets/images/home/country-flags/Iran.png",
     flagAlt: "flag_iran",
-    quote:
-      "I made mistakes investing on my own, but {APP_NAME} guided me onto the right path with their expert advice and strategies.",
+    quote: `I made some costly mistakes trying to invest in cryptocurrencies on my own, losing money due to poor decisions and market volatility. That’s when I turned to ${APP_NAME}, and it was a turning point. Their expert advisors took the time to educate me, walking me through tailored strategies that aligned with my financial aspirations. Their platform is intuitive, and their insights have helped me rebuild my portfolio with confidence. Thanks to ${APP_NAME}, I’m now on a solid path to financial growth, and I feel supported every step of the way.`,
   },
   {
     image: "/assets/images/home/testimonials/testimonials-4.jpg",
@@ -52,8 +49,7 @@ const testimonialsData: Testimonial[] = [
     location: "Toronto, Canada",
     flag: "/assets/images/home/country-flags/Canada.png",
     flagAlt: "flag_canada",
-    quote:
-      "Great company with top-notch investment services. {APP_NAME} keeps delivering, and I’m thrilled with their work!",
+    quote: `${APP_NAME} is hands-down one of the best investment companies I’ve ever worked with. Their professionalism and top-notch services have exceeded my expectations at every turn. From the moment I signed up, their team provided clear, actionable advice that helped me diversify my investments and maximize returns. What I appreciate most is their transparency and commitment to keeping me informed. I’m thrilled with the results and look forward to continuing this partnership for years to come!`,
   },
   {
     image: "/assets/images/home/testimonials/testimonials-5.jpg",
@@ -61,8 +57,7 @@ const testimonialsData: Testimonial[] = [
     location: "California, USA",
     flag: "/assets/images/home/country-flags/USA.png",
     flagAlt: "flag_usa",
-    quote:
-      "By far the best investment platform this year. {APP_NAME} built me a solid portfolio and provides ongoing support. I’m planning to invest even more!",
+    quote: `I’ve tried several investment platforms over the years, but ${APP_NAME} stands out as the best by far. Their team built me a robust, diversified portfolio that perfectly balances risk and reward, and their ongoing support has been phenomenal. Whether it’s answering my questions or providing market updates, they’re always one step ahead. The results speak for themselves—I’ve seen impressive growth, and I’m already planning to increase my investments with them. If you’re serious about wealth-building, ${APP_NAME} is the way to go!`,
   },
 ];
 

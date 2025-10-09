@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Bitcoin, Coins as Ethereum } from "lucide-react";
+import { Bitcoin, Coins as Ethereum, DollarSign as USDT } from "lucide-react";
 import { toast } from "sonner";
 import SideNavbar from "@/components/shared/SideNavbar";
 import { Separator } from "@/components/ui/separator";
@@ -88,6 +88,7 @@ const Deposit = ({ callbackUrl = "/sign-in" }: { callbackUrl?: string }) => {
   const Coins = [
     { name: "Bitcoin", icon: Bitcoin, color: "text-yellow-500" },
     { name: "Ethereum", icon: Ethereum, color: "text-blue-900" },
+    { name: "USDT", icon: USDT, color: "text-green-500" },
   ];
 
   const [localSelectedPlan, setLocalSelectedPlan] = useState<Plan | null>(null);
