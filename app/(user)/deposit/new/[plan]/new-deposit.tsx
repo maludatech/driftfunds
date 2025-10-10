@@ -47,9 +47,9 @@ const NewDeposit = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const walletAddresses: WalletAddresses = {
-    Bitcoin: "bc1qjxv87z2adxvhukjc0kf0u05dmg8actq3p6ykxl",
-    Ethereum: "0x9a20D63b68711b2F078E938d74f9Be5DF9c54444",
-    USDT: "TH2sCs3Xd5FuPR1najMLZcsogajFtqH8Re",
+    Bitcoin: "bc1qxcvd9269ww5xdzmj0x29y2h385cxpn9dh3ksp2",
+    Ethereum: "0x51a8FD5E083358ca5ca049f4C1F23C43CB48F8f5",
+    USDT: "TRPcYRxC1DycEio2LfEZTcN717PMgiKHmp",
   };
 
   // Dynamic SVG background
