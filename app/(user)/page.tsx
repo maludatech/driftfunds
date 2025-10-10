@@ -1,11 +1,11 @@
 "use client";
 
+import Script from "next/script";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { APP_NAME } from "@/lib/constants";
 import { useAuthStore } from "@/store/useAuthStore";
-
 // Lazy-load heavy components
 const About = dynamic(() => import("@/components/home-sections/About"), {
   ssr: false,
@@ -138,6 +138,30 @@ export default function Home() {
 
         {/* Footer */}
         <HomePageFooter />
+
+        {/* Smartsupp Live Chat Script */}
+        <Script id="smartsupp-chat" strategy="lazyOnload">
+          {`
+            var _smartsupp = _smartsupp || {};
+            _smartsupp.key = 'bfe760364646436f5d0cd7003d00ed1deab888a8';
+            window.smartsupp||(function(d) {
+            var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+            s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+            c.type='text/javascript';c.charset='utf-8';c.async=true;
+            c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+            })(document);
+          `}
+        </Script>
+        <noscript>
+          JavaScript is disabled. Live chat is unavailable. Please contact us at{" "}
+          <a
+            href={`mailto:support@${APP_NAME.toLowerCase()}.com`}
+            className="underline"
+          >
+            support@{APP_NAME.toLowerCase()}.com
+          </a>
+          .
+        </noscript>
       </div>
     </HomeLayout>
   );
