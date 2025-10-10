@@ -21,6 +21,7 @@ import { log } from "@/lib/logger";
 const Coins = [
   { name: "Bitcoin", icon: Bitcoin, color: "text-yellow-500" },
   { name: "Ethereum", icon: Ethereum, color: "text-blue-900" },
+  { name: "USDT", icon: DollarSign, color: "text-green-500" },
 ];
 
 const Withdrawal = ({ callbackUrl = "/sign-in" }: { callbackUrl?: string }) => {
